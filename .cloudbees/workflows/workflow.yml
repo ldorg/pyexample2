@@ -1,0 +1,45 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: demo-workflow
+on:
+  push:
+    branches:
+      - "**"
+  workflow_dispatch:
+
+# Steps
+# - Test (python)
+# - parallel scans
+#   - Synk
+#   - Sonarqube
+# - package (python)
+# - Docker build
+# - Snyk container scan
+# - Docker push
+# - Post (always) get metrics collection and send emails
+
+jobs:
+  test:
+    steps:
+      - uses: cloudbees-io/checkout@v1
+        name: Get source code
+      - name: Run unit tests
+        id: unit-tests
+        uses: docker://python:lts
+        kind: test
+        run: |
+          pip install -r requirements-dev.txt
+          pytest --junitxml=test-results.xml --cov=app --cov-report=xml --cov-report=term
+          cat ./coverage.xml > $CLOUDBEES_OUTPUTS/CODE_COVERAGE
+      - name: Publish test results
+        uses: cloudbees-io/publish-test-results@v2
+        with:
+          test-type: JUNIT
+          results-path: test-results.xml
+      - name: Publish evidence
+        uses: cloudbees-io/publish-evidence-item@v1
+        with:
+          content: |-
+            ## Test code coverage
+
+            ${{ steps.unit-tests.outputs.CODE_COVERAGE }}
