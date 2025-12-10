@@ -30,12 +30,12 @@ jobs:
         run: |
           pip install -r requirements-dev.txt
           pytest --junitxml=test-results.xml --cov=app --cov-report=xml --cov-report=term
-          cat ./coverage.xml > $CLOUDBEES_OUTPUTS/CODE_COVERAGE
+          cat ${{ cloudbees.workspace }}/coverage.xml > $CLOUDBEES_OUTPUTS/CODE_COVERAGE
       - name: Publish test results
         uses: cloudbees-io/publish-test-results@v2
         with:
           test-type: JUNIT
-          results-path: test-results.xml
+          results-path: ${{ cloudbees.workspace }}/test-results.xml
       - name: Publish evidence
         uses: cloudbees-io/publish-evidence-item@v1
         with:
