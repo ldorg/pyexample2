@@ -35,7 +35,9 @@ jobs:
           echo "DEBUG"
           ls
           pwd
+          echo "=============== TEST-RESULTS ======================"
           cat test-results.xml
+          echo "=============== COVERAGE ======================"
           cat coverage.xml
       - name: Publish test results
         uses: cloudbees-io/publish-test-results@v2
