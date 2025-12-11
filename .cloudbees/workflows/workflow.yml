@@ -91,7 +91,7 @@ jobs:
         id: sonar-scan
         uses: cloudbees-io/sonarqube-plugin@v1
         with:
-          server-url: ${{ vars.SONAR_URL }}
+          url: ${{ vars.SONAR_URL }}
           token: ${{ secrets.SONAR_TOKEN }}
 
       - name: Publish evidence
