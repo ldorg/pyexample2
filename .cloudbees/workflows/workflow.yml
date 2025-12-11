@@ -81,15 +81,6 @@ jobs:
             Medium count: ${{steps.snyk-sast.outputs.medium-count}}
             Low count: ${{steps.snyk-sast.outputs.low-count}}
 
-
-            ## Snyk SCA results
-
-            Critical count: ${{steps.snyk-sca.outputs.critical-count}}
-            Very high count: ${{steps.snyk-sca.outputs.very-high-count}}
-            High count: ${{steps.snyk-sca.outputs.high-count}}
-            Medium count: ${{steps.snyk-sca.outputs.medium-count}}
-            Low count: ${{steps.snyk-sca.outputs.low-count}}
-
   sonarqube:
     needs:
       - test
