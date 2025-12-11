@@ -121,8 +121,29 @@ jobs:
       - name: Package python
         id: package-python
         uses: docker://python:3.13
-        kind: test
         run: |
           pip install poetry
           poetry install
           poetry build
+
+  build-image:
+    needs:
+      - package
+    steps:
+      - uses: cloudbees-io/checkout@v1
+        name: Get source code
+      - name: Setup AWS API authentication
+        uses: cloudbees-io/configure-aws-credentials@v1
+        id: aws-login
+        with:
+          aws-region: us-east-1
+          role-duration-seconds: "1200"
+          role-to-assume: arn:aws:iam::268150017804:role/demo-image-builder
+      - uses: cloudbees-io/kaniko@v1
+        name: Build container image
+        id: build-image
+        kind: build
+        with:
+          destination: 268150017804.dkr.ecr.us-east-1.amazonaws.com/ldorg/pyexample:${{ cloudbees.scm.sha }}
+          tar-path: container-image.tar
+          build-args: BUILDKIT_CONTEXT_KEEP_GIT_DIR=1,BUILDKIT_INLINE_CACHE=1
