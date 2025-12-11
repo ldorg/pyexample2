@@ -55,6 +55,11 @@ jobs:
     steps:
       - uses: cloudbees-io/checkout@v1
         name: Get source code
+      - name: Install dependencies
+        uses: docker://python:3.13
+        run: |
+          pip install poetry
+          poetry install
       - name: Scan with Snyk SAST
         id: snyk-sast
         uses: https://github.com/cloudbees-io/snyk-sast-scan-code@v1
@@ -90,6 +95,11 @@ jobs:
     steps:
       - uses: cloudbees-io/checkout@v1
         name: Get source code
+      - name: Install dependencies
+        uses: docker://python:3.13
+        run: |
+          pip install poetry
+          poetry install
       - name: Scan with SonarQube
         id: sonar-scan
         uses: cloudbees-io/sonarqube-plugin@v1
