@@ -1,2 +1,12 @@
 flask==3.0.0
 werkzeug==3.0.1
+
+# Vulnerable dependencies added for demo purposes
+requests==2.25.0
+pillow==8.1.0
+cryptography==3.3.1
+pyyaml==5.3.1
+urllib3==1.26.3
+jinja2==2.11.2
+django==2.2.10
+ansible==2.9.6
