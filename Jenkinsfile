@@ -118,6 +118,7 @@ spec:
                                     --org=${SNYK_ORG} \
                                     --project-name=TEST_CX_NAME_pyexample2 \
                                     --severity-threshold=medium \
+                                    --remote-repo-url=https://github.com/ldorg/pyexample2 \
                                     --json-file-output=snyk-sast-results.json \
                                     --sarif-file-output=snyk-sast-results.sarif \
                                     || echo "Snyk SAST found issues (exit code: $?)"
@@ -157,6 +158,7 @@ spec:
                                     --org=${SNYK_ORG} \
                                     --project-name=TEST_CX_NAME_pyexample2 \
                                     --severity-threshold=medium \
+                                    --remote-repo-url=https://github.com/ldorg/pyexample2 \
                                     --json-file-output=snyk-sca-results.json \
                                     --sarif-file-output=snyk-sca-results.sarif \
                                     || echo "Snyk SCA found vulnerabilities (exit code: $?)"
@@ -178,18 +180,8 @@ spec:
             // Publish JUnit test results (automatically registers with CloudBees Unify)
             junit testResults: 'test-results.xml', allowEmptyResults: false
 
-            // Archive coverage markdown report
-            archiveArtifacts artifacts: 'coverage.md', allowEmptyArchive: false, fingerprint: true
-
-            // Publish HTML coverage report
-            publishHTML([
-                reportDir: 'coverage-html',
-                reportFiles: 'index.html',
-                reportName: 'Python Coverage Report',
-                keepAll: true,
-                alwaysLinkToLastBuild: true,
-                allowMissing: false
-            ])
+            // Archive coverage reports
+            archiveArtifacts artifacts: 'coverage.md,coverage-html/**', allowEmptyArchive: false, fingerprint: true
 
             // Archive Snyk security scan results
             archiveArtifacts artifacts: 'snyk-*.json,snyk-*.sarif', allowEmptyArchive: true, fingerprint: true
