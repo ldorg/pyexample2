@@ -77,3 +77,10 @@ dmypy.json
 
 # pytype static type analyzer
 .pytype/
+
+# Snyk scan results
+snyk-*.json
+snyk-*.sarif
+
+# Local test scripts
+test-snyk-local.sh
