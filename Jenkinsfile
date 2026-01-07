@@ -46,6 +46,9 @@ spec:
             steps {
                 checkout scm
                 script {
+                    // Fix git safe directory issue in containers
+                    sh 'git config --global --add safe.directory "*"'
+
                     env.GIT_COMMIT_SHORT = sh(
                         script: "git rev-parse --short HEAD",
                         returnStdout: true
