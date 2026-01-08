@@ -177,8 +177,8 @@ spec:
 
     post {
         always {
-            // Publish JUnit test results (automatically registers with CloudBees Unify)
-            junit testResults: 'test-results.xml', allowEmptyResults: false
+            // Publish JUnit test results
+            junit 'test-results.xml'
 
             // Archive coverage reports
             archiveArtifacts artifacts: 'coverage.md,coverage-html/**', allowEmptyArchive: false, fingerprint: true
