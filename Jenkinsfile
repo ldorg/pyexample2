@@ -90,6 +90,7 @@ spec:
                         echo "=== Coverage Summary ==="
                         cat coverage.md
                     '''
+                    junit 'test-results.xml'
                 }
             }
         }
@@ -178,7 +179,6 @@ spec:
     post {
         always {
             // Publish JUnit test results
-            junit 'test-results.xml'
 
             // Archive coverage reports
             archiveArtifacts artifacts: 'coverage.md,coverage-html/**', allowEmptyArchive: false, fingerprint: true
